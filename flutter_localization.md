@@ -37,3 +37,94 @@
     ```dart
          Text(TR.of(context).appName)
      ```
+     
+## now what a bout the arb file tricks 
+the arb file may be a simple json 
+
+like this
+```arb
+"appName:":"My app name",
+```
+
+But there more things you can know about it
+
+## place holders
+   you can use place holders
+   
+```arb
+"hello":"Hello {name}",
+"@hello":{
+  "placeholders":{
+    "name": {}
+  }
+}
+```
+
+now the gerated class will contain this
+
+```dart
+  String hello(dynamic name)
+  
+  /// so you can use it
+  Text(TR.of(context).hello("Mohammed")
+```
+
+what about if i need the name to be a string 
+
+```arb
+"hello":"Hello {name}",
+"@hello":{
+  "placeholders":{
+    "name": {
+       "type": "String",
+    }
+  }
+}
+```
+
+What about date time and doubles
+
+If you used a placehoder which in type of DateTime or double you need to add also its format, see intl package formates
+
+```arb
+  "printDate": "Hey the current date is {date}",
+  "@printDate": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMEd"
+      }
+    }
+  },
+  "printTime": "Hey the current time is {date}",
+  "@printTime": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+```
+
+## plurals 
+
+plurals are agood way to work with counts
+
+```arb
+"hours": "{count,plural, =0{Day not started} =1{One hour} =2{Two hours}  few{{count} hours} many{{count} hours} other{{count} years}}",
+"@hours":{
+    "placeholders": {
+      "count": {}
+    }
+}
+```
+
+you can know more about plurals in localizely https://localizely.com/language-plural-rules/
+but note that zero is 0= ,one is 1= , two is 2=
+
+
+see also this for other features like select https://localizely.com/flutter-arb/
+
+
+
